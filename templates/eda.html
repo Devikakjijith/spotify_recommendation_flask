@@ -1,0 +1,71 @@
+
+{% extends "base.html" %}
+
+{% block title %}EDA & Analysis | SoundSpace{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+    <p class="eyebrow">MUSIC INSIGHTS</p>
+    <h1>Exploratory Data Analysis</h1>
+    <p>Understand the patterns and relationships in Spotify audio features.</p>
+</section>
+
+<div class="chart-grid">
+
+    <section class="card chart-card">
+        <h2>Feature Distributions</h2>
+        <p class="section-description">
+            Understand how the audio feature values are distributed.
+        </p>
+        <img src="data:image/png;base64,{{ distribution_chart }}"
+             alt="Audio feature distributions">
+    </section>
+
+    <section class="card chart-card">
+        <h2>Correlation Heatmap</h2>
+        <p class="section-description">
+            Explore relationships between audio features.
+        </p>
+        <img src="data:image/png;base64,{{ correlation_chart }}"
+             alt="Correlation heatmap">
+    </section>
+
+    <section class="card chart-card">
+        <h2>Outlier Analysis</h2>
+        <p class="section-description">
+            Identify unusual values in the audio features.
+        </p>
+        <img src="data:image/png;base64,{{ boxplot_chart }}"
+             alt="Audio feature boxplots">
+    </section>
+
+    {% if scatter_chart %}
+    <section class="card chart-card">
+        <h2>Danceability vs Energy</h2>
+        <p class="section-description">
+            Compare two important characteristics of songs.
+        </p>
+        <img src="data:image/png;base64,{{ scatter_chart }}"
+             alt="Danceability versus energy">
+    </section>
+    {% endif %}
+
+    {% if popularity_chart %}
+    <section class="card chart-card">
+        <h2>Popularity Distribution</h2>
+        <img src="data:image/png;base64,{{ popularity_chart }}"
+             alt="Song popularity distribution">
+    </section>
+    {% endif %}
+
+</div>
+
+<section class="card">
+    <h2>Feature Statistics</h2>
+    <div class="table-container">
+        {{ feature_summary | safe }}
+    </div>
+</section>
+
+{% endblock %}

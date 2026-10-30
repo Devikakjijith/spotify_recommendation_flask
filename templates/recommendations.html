@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}Song Recommendations | SoundSpace{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+    <p class="eyebrow">DISCOVER MUSIC</p>
+    <h1>Song Recommendations</h1>
+    <p>Find tracks using unsupervised learning powered by our saved PCA model and StandardScaler.</p>
+</section>
+
+<!-- Model Status Banner -->
+<div class="model-status-card card">
+    <div class="model-status-header">
+        <div class="status-indicator">
+            <span class="status-dot"></span>
+            <strong>Inference Engine Active</strong>
+        </div>
+        <span class="model-badge">Saved Model: {{ model_source }}</span>
+    </div>
+    <p style="margin: 6px 0 0; font-size: 13px; color: #587163;">
+        Audio features are transformed using the persisted <code>StandardScaler</code> and 
+        projected into the <code>{{ n_components }}</code>-dimensional PCA space to find nearest acoustic neighbors.
+    </p>
+</div>
+
+<section class="card recommendation-container">
+    <h2>Find Similar Songs</h2>
+
+    <!-- Mode Selector Tabs -->
+    <div class="tab-container">
+        <button type="button" class="tab-button {% if rec_mode != 'custom' %}active{% endif %}" id="tab-library-btn" onclick="switchTab('library')">
+            Library Track Selection
+        </button>
+        <button type="button" class="tab-button {% if rec_mode == 'custom' %}active{% endif %}" id="tab-custom-btn" onclick="switchTab('custom')">
+            Custom Audio Features (Real-Time Inference)
+        </button>
+    </div>
+
+    <!-- MODE 1: Library Song Form -->
+    <div id="library-form-panel" style="{% if rec_mode == 'custom' %}display: none;{% endif %}">
+        <form method="POST" action="{{ url_for('recommend_page') }}" class="recommendation-form">
+            <input type="hidden" name="rec_mode" value="library">
+
+            <label for="song">Select a song from library</label>
+            <select id="song" name="song" required>
+                {% for song in song_options %}
+                <option value="{{ song.value }}"
+                    {% if selected_song == song.value %}selected{% endif %}>
+                    {{ song.label }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <label for="number_lib">Number of recommendations</label>
+            <select id="number_lib" name="number">
+                {% for n in [5, 10, 15, 20] %}
+                <option value="{{ n }}"
+                    {% if selected_number == n %}selected{% endif %}>
+                    {{ n }} songs
+                </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="primary-button">
+                Find Recommendations
+            </button>
+        </form>
+    </div>
+
+    <!-- MODE 2: Custom Audio Features Form -->
+    <div id="custom-form-panel" style="{% if rec_mode != 'custom' %}display: none;{% endif %}">
+        <form method="POST" action="{{ url_for('recommend_page') }}" class="recommendation-form">
+            <input type="hidden" name="rec_mode" value="custom">
+
+            <p class="section-description" style="margin-bottom: 12px;">
+                Enter custom acoustic attributes. The saved model will scale and project these into PCA latent space:
+            </p>
+
+            <div class="feature-inputs-grid">
+                <div class="input-field">
+                    <label for="danceability">Danceability (0.0 – 1.0)</label>
+                    <input type="number" step="0.01" min="0" max="1" id="danceability" name="danceability" value="{{ custom_values.get('danceability', 0.55) }}" required>
+                </div>
+
+                <div class="input-field">
+                    <label for="energy">Energy (0.0 – 1.0)</label>
+                    <input type="number" step="0.01" min="0" max="1" id="energy" name="energy" value="{{ custom_values.get('energy', 0.57) }}" required>
+                </div>
+
+                <div class="input-field">
+                    <label for="valence">Valence / Positivity (0.0 – 1.0)</label>
+                    <input type="number" step="0.01" min="0" max="1" id="valence" name="valence" value="{{ custom_values.get('valence', 0.45) }}" required>
+                </div>
+
+                <div class="input-field">
+                    <label for="tempo">Tempo (BPM: 30 – 240)</label>
+                    <input type="number" step="0.1" min="30" max="250" id="tempo" name="tempo" value="{{ custom_values.get('tempo', 118.0) }}" required>
+                </div>
+
+                <div class="input-field">
+                    <label for="acousticness">Acousticness (0.0 – 1.0)</label>
+                    <input type="number" step="0.01" min="0" max="1" id="acousticness" name="acousticness" value="{{ custom_values.get('acousticness', 0.37) }}" required>
+                </div>
+
+                <div class="input-field">
+                    <label for="instrumentalness">Instrumentalness (0.0 – 1.0)</label>
+                    <input type="number" step="0.01" min="0" max="1" id="instrumentalness" name="instrumentalness" value="{{ custom_values.get('instrumentalness', 0.15) }}" required>
+                </div>
+
+                <div class="input-field">
+                    <label for="loudness">Loudness (dB: -50 to 5)</label>
+                    <input type="number" step="0.1" min="-60" max="10" id="loudness" name="loudness" value="{{ custom_values.get('loudness', -9.5) }}" required>
+                </div>
+
+                <div class="input-field">
+                    <label for="speechiness">Speechiness (0.0 – 1.0)</label>
+                    <input type="number" step="0.01" min="0" max="1" id="speechiness" name="speechiness" value="{{ custom_values.get('speechiness', 0.12) }}" required>
+                </div>
+
+                <div class="input-field">
+                    <label for="liveness">Liveness (0.0 – 1.0)</label>
+                    <input type="number" step="0.01" min="0" max="1" id="liveness" name="liveness" value="{{ custom_values.get('liveness', 0.21) }}" required>
+                </div>
+
+                <div class="input-field">
+                    <label for="number_cust">Recommendations Count</label>
+                    <select id="number_cust" name="number">
+                        {% for n in [5, 10, 15, 20] %}
+                        <option value="{{ n }}"
+                            {% if selected_number == n %}selected{% endif %}>
+                            {{ n }} songs
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="primary-button" style="margin-top: 15px;">
+                Transform & Find Recommendations
+            </button>
+        </form>
+    </div>
+</section>
+
+{% if recommendations is not none %}
+<section class="card">
+    <h2>Recommended Songs</h2>
+    
+    {% if input_summary %}
+    <div class="query-summary-box">
+        <p><strong>Query:</strong> {{ input_summary }}</p>
+        {% if pca_projections %}
+        <div class="pca-chips-container">
+            <span class="pca-chips-label">Model PCA Projections:</span>
+            {% for chip in pca_projections %}
+            <span class="pca-chip"><strong>{{ chip.component }}:</strong> {{ chip.value }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <p class="section-description">
+        Calculated using cosine similarity in the PCA latent space produced by the saved models.
+    </p>
+
+    {% if recommendations|length > 0 %}
+    <div class="table-container">
+        {{ recommendations | safe }}
+    </div>
+    {% else %}
+    <p>No recommendations were found.</p>
+    {% endif %}
+</section>
+{% endif %}
+
+<script>
+function switchTab(mode) {
+    const libPanel = document.getElementById('library-form-panel');
+    const custPanel = document.getElementById('custom-form-panel');
+    const libBtn = document.getElementById('tab-library-btn');
+    const custBtn = document.getElementById('tab-custom-btn');
+
+    if (mode === 'library') {
+        libPanel.style.display = 'block';
+        custPanel.style.display = 'none';
+        libBtn.classList.add('active');
+        custBtn.classList.remove('active');
+    } else {
+        libPanel.style.display = 'none';
+        custPanel.style.display = 'block';
+        custBtn.classList.add('active');
+        libBtn.classList.remove('active');
+    }
+}
+</script>
+
+{% endblock %}

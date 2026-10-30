@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}PCA & Performance | SoundSpace{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+    <p class="eyebrow">MACHINE LEARNING</p>
+    <h1>PCA & Model Performance</h1>
+    <p>Explore dimensionality reduction, model metrics, and saved model artifacts.</p>
+</section>
+
+<!-- Model Persistence Card -->
+<section class="card model-status-card">
+    <div class="model-status-header">
+        <div class="status-indicator">
+            <span class="status-dot"></span>
+            <strong>Saved Model Active</strong>
+        </div>
+        <span class="model-badge">Persistent Artifacts</span>
+    </div>
+    <div class="model-status-details">
+        <div><strong>Model Bundle:</strong> <code>{{ model_source }}</code></div>
+        <div><strong>Standalone Models:</strong> <code>models/pca_model.pkl</code>, <code>models/scaler.pkl</code>, <code>models/kmeans_model.pkl</code></div>
+        <div><strong>Last Trained:</strong> {{ model_trained_at }}</div>
+    </div>
+</section>
+
+<div class="metrics-grid">
+
+    <div class="metric-card">
+        <p>Original Features</p>
+        <h2>{{ original_features }}</h2>
+    </div>
+
+    <div class="metric-card">
+        <p>Reduced Components</p>
+        <h2>{{ reduced_features }}</h2>
+    </div>
+
+    <div class="metric-card">
+        <p>Variance Retained</p>
+        <h2>{{ variance_retained }}%</h2>
+    </div>
+
+    <div class="metric-card">
+        <p>Reconstruction MSE</p>
+        <h2>{{ reconstruction_mse }}</h2>
+    </div>
+
+    <div class="metric-card">
+        <p>Dimensionality Reduction</p>
+        <h2>{{ dimensionality_reduction }}%</h2>
+    </div>
+
+    <div class="metric-card">
+        <p>Silhouette Score</p>
+        <h2>{{ silhouette_score }}</h2>
+    </div>
+
+</div>
+
+<section class="card">
+    <h2>PCA Visualization</h2>
+    <p class="section-description">
+        Each point represents a song projected onto the first two principal components.
+    </p>
+    <img src="data:image/png;base64,{{ pca_chart }}"
+         alt="PCA scatter plot">
+</section>
+
+<section class="card">
+    <h2>Cumulative Explained Variance</h2>
+    <p class="section-description">
+        See how the retained variance increases with the number of components.
+    </p>
+    <img src="data:image/png;base64,{{ variance_chart }}"
+         alt="Cumulative explained variance">
+</section>
+
+<section class="card">
+    <h2>Explained Variance by Component</h2>
+    <div class="table-container">
+        {{ component_table | safe }}
+    </div>
+</section>
+
+<section class="card">
+    <h2>Performance Interpretation</h2>
+    <ul class="interpretation-list">
+        <li><strong>Explained variance:</strong>
+            Higher values mean more of the original data's variation is retained.</li>
+        <li><strong>Reconstruction MSE:</strong>
+            Lower values mean less reconstruction error.</li>
+        <li><strong>Dimensionality reduction:</strong>
+            Shows how much the number of features has decreased.</li>
+        <li><strong>Silhouette score:</strong>
+            Measures cluster separation. Values closer to 1 generally indicate better-separated clusters.</li>
+    </ul>
+    <p class="note">
+        Silhouette score evaluates K-Means clustering on the reduced features,
+        not PCA directly.
+    </p>
+</section>
+
+{% endblock %}

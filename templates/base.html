@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}SoundSpace{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="{{ url_for('dataset_page') }}" class="logo">
+            <span class="music-icon">♫</span> SoundSpace
+        </a>
+
+        <div class="nav-links">
+            <a href="{{ url_for('dataset_page') }}">Dataset</a>
+            <a href="{{ url_for('eda_page') }}">EDA & Analysis</a>
+            <a href="{{ url_for('recommend_page') }}">Recommendations</a>
+            <a href="{{ url_for('pca_page') }}">PCA & Performance</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>SoundSpace | Spotify Music Analytics & Recommendation System</p>
+    </footer>
+
+</body>
+</html>

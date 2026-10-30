@@ -1,0 +1,61 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dataset Information | SoundSpace{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+    <p class="eyebrow">DATA EXPLORATION</p>
+    <h1>Spotify Dataset</h1>
+    <p>Explore the structure and characteristics of your music dataset.</p>
+</section>
+
+<div class="metrics-grid">
+    <div class="metric-card">
+        <p>Total Tracks</p>
+        <h2>{{ total_rows }}</h2>
+    </div>
+
+    <div class="metric-card">
+        <p>Total Columns</p>
+        <h2>{{ total_columns }}</h2>
+    </div>
+
+    <div class="metric-card">
+        <p>Audio Features</p>
+        <h2>{{ total_features }}</h2>
+    </div>
+
+    <div class="metric-card">
+        <p>Duplicate Rows</p>
+        <h2>{{ duplicates }}</h2>
+    </div>
+</div>
+
+<section class="card">
+    <h2>Sample Dataset</h2>
+    <p class="section-description">Preview of the first ten records.</p>
+    <div class="table-container">
+        {{ sample_table | safe }}
+    </div>
+</section>
+
+<section class="card">
+    <h2>Column Information</h2>
+    <p class="section-description">
+        Data types, missing values, and unique values for each column.
+    </p>
+    <div class="table-container">
+        {{ column_table | safe }}
+    </div>
+</section>
+
+<section class="card">
+    <h2>Statistical Summary</h2>
+    <div class="table-container">
+        {{ summary_table | safe }}
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,492 @@
+
+/* -------- GENERAL -------- */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f6f4;
+    color: #24352b;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 35px auto;
+    min-height: 75vh;
+}
+
+/* -------- NAVIGATION -------- */
+
+.navbar {
+    background: #14251f;
+    padding: 18px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.music-icon {
+    color: #65e6a5;
+    font-size: 30px;
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+}
+
+.nav-links a {
+    color: #e4eee7;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: #65e6a5;
+}
+
+/* -------- PAGE HEADING -------- */
+
+.page-heading {
+    margin-bottom: 28px;
+}
+
+.page-heading h1 {
+    font-size: 34px;
+    color: #173d2c;
+    margin: 5px 0;
+}
+
+.page-heading p {
+    color: #65766b;
+}
+
+.eyebrow {
+    color: #17834d !important;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* -------- METRIC CARDS -------- */
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.metric-card {
+    background: #e1f3e8;
+    border: 1px solid #cfe8d9;
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.2s;
+}
+
+.metric-card:hover {
+    transform: translateY(-3px);
+}
+
+.metric-card p {
+    color: #4f6c5b;
+    margin: 0;
+    font-size: 14px;
+}
+
+.metric-card h2 {
+    color: #167446;
+    font-size: 27px;
+    margin: 8px 0 0;
+    overflow-wrap: anywhere;
+}
+
+/* -------- CONTENT CARDS -------- */
+
+.card {
+    background: #ffffff;
+    padding: 25px;
+    margin-bottom: 24px;
+    border-radius: 14px;
+    border: 1px solid #e4ebe6;
+    box-shadow: 0 4px 15px rgba(20, 50, 30, 0.04);
+}
+
+.card h2 {
+    color: #214b35;
+    font-size: 21px;
+    margin-top: 0;
+}
+
+.section-description {
+    color: #718076;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* -------- TABLES -------- */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+    background: white;
+}
+
+th {
+    background: #e4f3e9;
+    color: #214b35;
+    font-weight: bold;
+    text-align: left;
+}
+
+th, td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #e8eee9;
+    white-space: nowrap;
+}
+
+tbody tr:hover {
+    background: #f4faf6;
+}
+
+/* -------- CHARTS -------- */
+
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    align-items: start;
+}
+
+.chart-card {
+    margin-bottom: 0;
+    min-width: 0;
+}
+
+.chart-card img,
+.card > img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* -------- RECOMMENDATION FORM -------- */
+
+.recommendation-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 650px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #304d3b;
+}
+
+select,
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cad7ce;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #24352b;
+    font-size: 15px;
+}
+
+select:focus,
+input:focus {
+    outline: 2px solid #65c990;
+    border-color: #29965c;
+}
+
+.primary-button {
+    background: #176b43;
+    color: white;
+    border: none;
+    padding: 13px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+.primary-button:hover {
+    background: #105332;
+}
+
+/* -------- INTERPRETATION -------- */
+
+.interpretation-list {
+    padding-left: 22px;
+}
+
+.interpretation-list li {
+    margin-bottom: 12px;
+}
+
+.note {
+    background: #fff6df;
+    border-left: 4px solid #e2ad35;
+    border-radius: 5px;
+    padding: 12px 15px;
+    color: #67501e;
+    font-size: 14px;
+}
+
+/* -------- FOOTER -------- */
+
+footer {
+    background: #14251f;
+    color: #c5d7cb;
+    padding: 18px;
+    text-align: center;
+    font-size: 13px;
+    margin-top: 40px;
+}
+
+/* -------- RESPONSIVE DESIGN -------- */
+
+@media (max-width: 850px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        gap: 14px;
+    }
+
+    .chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-heading h1 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 94%;
+        margin: 20px auto;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    .metrics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .metric-card {
+        padding: 13px;
+    }
+
+    .metric-card h2 {
+        font-size: 22px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+
+/* -------- SAVED MODEL STATUS & BADGES -------- */
+
+.model-status-card {
+    background: #eef8f2;
+    border: 1px solid #c2e5d0;
+    margin-bottom: 24px;
+    padding: 18px 22px;
+}
+
+.model-status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #125c38;
+    font-size: 15px;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+    display: inline-block;
+}
+
+.model-badge {
+    background: #176b43;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-radius: 12px;
+    letter-spacing: 0.5px;
+}
+
+.model-status-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #3b5747;
+}
+
+.model-status-details code {
+    background: #e1efe7;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #165b38;
+}
+
+/* -------- TABS FOR RECOMMENDATIONS -------- */
+
+.tab-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 22px;
+    border-bottom: 2px solid #e2ebe5;
+    padding-bottom: 12px;
+}
+
+.tab-button {
+    background: #e6f0ea;
+    border: 1px solid #cadcd0;
+    color: #2b4937;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-button:hover {
+    background: #d5e9dc;
+}
+
+.tab-button.active {
+    background: #176b43;
+    color: #ffffff;
+    border-color: #176b43;
+}
+
+/* -------- FEATURE INPUT GRID -------- */
+
+.feature-inputs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 15px;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-field label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2e4d3a;
+}
+
+.input-field input,
+.input-field select {
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #cad8cf;
+    border-radius: 6px;
+}
+
+/* -------- QUERY SUMMARY & PCA CHIPS -------- */
+
+.query-summary-box {
+    background: #f3faf6;
+    border: 1px solid #cce5d6;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+}
+
+.query-summary-box p {
+    margin: 0 0 8px 0;
+    color: #1a422d;
+    font-size: 14px;
+}
+
+.pca-chips-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.pca-chips-label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #2e593f;
+    margin-right: 4px;
+}
+
+.pca-chip {
+    background: #e2f2e8;
+    color: #115332;
+    border: 1px solid #badcc7;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-family: monospace;
+}
